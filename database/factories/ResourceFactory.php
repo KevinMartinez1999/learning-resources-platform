@@ -19,7 +19,7 @@ class ResourceFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => $this->faker->word,
+            'title' => $this->faker->sentence,
             'category_id' => Category::factory(),
             'creator_id' => User::factory(),
             'link' => $this->faker->url,
