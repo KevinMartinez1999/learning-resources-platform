@@ -1,6 +1,10 @@
 <script setup>
 import { Head, Link } from '@inertiajs/vue3';
-import { defineProps, onMounted } from 'vue';
+import axios from 'axios';
+import { defineProps, onMounted, ref, watch } from 'vue';
+
+let search = ref('');
+let filteredResources = ref([]);
 
 const props = defineProps({
     canLogin: {
@@ -14,8 +18,14 @@ const props = defineProps({
     },
 });
 
+watch(search, (value) => {
+    axios.get('api/resources?search=' + value).then((response) => {
+        filteredResources.value = response.data;
+    });
+});
+
 onMounted(() => {
-    console.log('Component mounted!', props.resources);
+    filteredResources.value = props.resources;
 });
 </script>
 
@@ -51,6 +61,7 @@ onMounted(() => {
             </div>
 
             <div class="relative overflow-x-auto">
+                <input type="text" class="w-2/3 text-sm" placeholder="Buscar recurso..." v-model="search" />
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-lg text-gray-800 uppercase bg-gray-500">
                         <tr>
@@ -60,7 +71,7 @@ onMounted(() => {
                         </tr>
                     </thead>
                     <tbody class="bg-white justify-start">
-                        <tr v-for="resource in resources" :key="resource.id">
+                        <tr v-for="resource in filteredResources" :key="resource.id">
                             <th scope="row" class="p-4">{{ resource.title }}</th>
                             <th scope="row" class="p-4">{{ resource.category.name }}</th>
                             <th scope="row" class="p-4"><a :href="resource.link" target="_blank">Ver recurso</a></th>
