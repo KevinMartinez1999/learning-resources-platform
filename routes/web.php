@@ -2,13 +2,13 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResourceController;
+use App\Http\Controllers\CategoryController;
 use App\Models\Category;
 use App\Models\Resource;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-use APP\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
