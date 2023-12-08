@@ -20,7 +20,9 @@ const props = defineProps({
 
 watch(search, (value) => {
     axios.get('api/resources?search=' + value).then((response) => {
-        filteredResources.value = response.data;
+        filteredResources.value = response.data.sort((a, b) => {
+            return b.created_at.localeCompare(a.created_at);
+        });
     });
 });
 
