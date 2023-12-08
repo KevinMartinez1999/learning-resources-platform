@@ -50,7 +50,7 @@ onMounted(() => {
             </template>
         </div>
 
-        <div class="max-w-7xl mx-auto p-6 lg:p-8">
+        <div>
             <div class="flex justify-center">
                 <svg viewBox="0 0 62 65" fill="none" xmlns="http://www.w3.org/2000/svg"
                     class="h-16 w-auto bg-gray-100 dark:bg-gray-900">
@@ -60,24 +60,35 @@ onMounted(() => {
                 </svg>
             </div>
 
-            <div class="relative overflow-x-auto">
-                <input type="text" class="w-1/3 text-sm" placeholder="Buscar recurso..." v-model="search" />
-                <table class="w-full text-sm text-left text-gray-500">
-                    <thead class="text-lg text-gray-800 uppercase bg-gray-500">
-                        <tr>
-                            <th scope="col" class="p-4">Recurso</th>
-                            <th scope="col" class="p-4">Categoria</th>
-                            <th scope="col" class="p-4">Link</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white justify-start">
-                        <tr v-for="resource in filteredResources" :key="resource.id">
-                            <th scope="row" class="p-4">{{ resource.title }}</th>
-                            <th scope="row" class="p-4">{{ resource.category.name }}</th>
-                            <th scope="row" class="p-4"><a :href="resource.link" target="_blank">Ver recurso</a></th>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="ml-48 mr-48 mt-8">
+                <input type="text" class="w-1/3 text-sm rounded mt-4 mb-2"
+                    placeholder="Buscar recurso..." v-model="search" />
+                <div class="rounded overflow-y-auto h-96">
+                    <table class="table-fixed text-left w-full">
+                        <thead class="text-lg uppercase bg-gray-500 text-white font-bold">
+                            <tr>
+                                <th scope="col" class="p-4 w-2/3">Recurso</th>
+                                <th scope="col" class="p-4 w-1/3">Categoria</th>
+                                <th scope="col" class="p-4 w-1/3">Link</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr v-for="resource in filteredResources" :key="resource.id">
+                                <th scope="row" class="p-4 w-2/3">{{ resource.title }}</th>
+                                <th scope="row" class="p-4 w-1/3">{{ resource.category.name }}</th>
+                                <th scope="row" class="p-4 w-1/3"><a :href="resource.link" target="_blank">Ver recurso</a>
+                                </th>
+                            </tr>
+                            <template v-if="filteredResources.length == 0">
+                                <tr>
+                                    <th scope="row" class="p-4">No se encontraron resultados</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
