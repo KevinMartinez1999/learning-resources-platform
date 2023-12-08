@@ -61,7 +61,7 @@ onMounted(() => {
             </div>
 
             <div class="relative overflow-x-auto">
-                <input type="text" class="w-2/3 text-sm" placeholder="Buscar recurso..." v-model="search" />
+                <input type="text" class="w-1/3 text-sm" placeholder="Buscar recurso..." v-model="search" />
                 <table class="w-full text-sm text-left text-gray-500">
                     <thead class="text-lg text-gray-800 uppercase bg-gray-500">
                         <tr>

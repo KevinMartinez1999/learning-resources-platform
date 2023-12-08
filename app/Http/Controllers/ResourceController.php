@@ -15,7 +15,7 @@ class ResourceController extends Controller
         return Inertia::render('Resources', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'resources' => Resource::with('category')->get(),
+            'resources' => Resource::with('category')->latest()->get(),
         ]);
     }
 
@@ -33,7 +33,7 @@ class ResourceController extends Controller
             'title' => $request->title,
             'link' => $request->link,
             'description' => $request->description,
-            'category_id' => Category::first()->id,
+            'category_id' => $request->category_id,
             'creator_id' => $request->user()->id,
         ]);
 
