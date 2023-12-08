@@ -50,7 +50,7 @@ onMounted(() => {
         </div>
         <div class="mt-4 mb-4">
             <p>Descripción:</p>
-            <textarea v-model="description" class="w-1/2 h-48 rounded"></textarea>
+            <textarea v-model="description" class="w-1/2 h-48 rounded resize-none"></textarea>
         </div>
         <button @click="createResource"
             class="w-28 py-2 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-blue-700 duration-300 font-bold text-white rounded">
