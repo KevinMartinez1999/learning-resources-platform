@@ -79,6 +79,13 @@ onMounted(() => {
                                 <th scope="row" class="p-4 w-1/3"><a :href="resource.link" target="_blank">Ver recurso</a>
                                 </th>
                             </tr>
+                            <template v-if="filteredResources.length == 0">
+                                <tr>
+                                    <th scope="row" class="p-4">No se encontraron resultados</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </template>
                         </tbody>
                     </table>
                 </div>
