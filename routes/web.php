@@ -21,7 +21,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [ResourceController::class, 'index']);
+Route::redirect('/', '/resources');
+
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

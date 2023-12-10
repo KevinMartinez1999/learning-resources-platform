@@ -91,14 +91,14 @@ onMounted(() => {
             <div class="ml-48 mr-48 mt-8">
                 <div class="mb-2">
                     <select v-model="selectedCategory"
-                        class="w-1/5 rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 focus:ring-opacity-50">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5">
                         <option :value="null">Todas las categorías</option>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
                     </select>
                     <input type="text" v-model="search"
-                        class="ml-2 w-1/3 rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 focus:ring-opacity-50"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/3 p-2.5 ml-2"
                         placeholder="Buscar recurso...">
                 </div>
                 <div class="rounded overflow-y-auto h-96">
