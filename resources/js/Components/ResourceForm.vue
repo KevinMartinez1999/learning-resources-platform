@@ -43,6 +43,7 @@ onMounted(() => {
             <label for="resource-category" class="block mb-2 text-sm font-medium text-gray-900">Categoría</label>
             <select id="resource-category" v-model="category_id"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5">
+                <option :value="null" disabled hidden>Seleccione una categoría</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id" class="text-gray-900">
                     {{ category.name }}</option>
             </select>
