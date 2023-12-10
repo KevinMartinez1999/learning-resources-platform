@@ -21,7 +21,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', [ResourceController::class, 'index']);
+Route::redirect('/', '/resources');
+
+Route::get('/resources', [ResourceController::class, 'index'])->name('resources');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -39,4 +41,4 @@ Route::get('api/resources', [ResourceController::class, 'search']);
 
 Route::middleware('auth')->post('api/resources', [ResourceController::class, 'store']);
 
-Route::middleware('auth')->get('api/categories', [CategoryController::class, 'index']);
+Route::get('api/categories', [CategoryController::class, 'index']);

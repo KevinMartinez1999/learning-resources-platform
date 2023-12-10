@@ -3,9 +3,6 @@ import { Head, Link } from '@inertiajs/vue3';
 import axios from 'axios';
 import { defineProps, onMounted, ref, watch } from 'vue';
 
-let search = ref('');
-let filteredResources = ref([]);
-
 const props = defineProps({
     canLogin: {
         type: Boolean,
@@ -16,13 +13,44 @@ const props = defineProps({
     resources: {
         type: Array,
     },
+    categories: {
+        type: Array,
+    },
 });
 
-watch(search, (value) => {
-    axios.get('api/resources?search=' + value).then((response) => {
-        filteredResources.value = response.data;
+let selectedCategory = ref(null)
+let search = ref('');
+let filteredResources = ref([]);
+
+watch([search, selectedCategory], (newValues) => {
+    const [newSearch, newCategory] = newValues;
+    axios.get('api/resources', {
+        params: {
+            search: newSearch,
+            category: newCategory
+        }
+    }).then((response) => {
+        filteredResources.value = response.data.sort((a, b) => {
+            return b.created_at.localeCompare(a.created_at);
+        });
     });
-});
+}, { immediate: true });
+
+// watch(search, (value) => {
+//     axios.get('api/resources?search=' + value + '&category=' + selectedCategory.value).then((response) => {
+//         filteredResources.value = response.data.sort((a, b) => {
+//             return b.created_at.localeCompare(a.created_at);
+//         });
+//     });
+// });
+
+// watch(selectedCategory, (value) => {
+//     axios.get('api/resources?category=' + value + '&search=' + search.value).then((response) => {
+//         filteredResources.value = response.data.sort((a, b) => {
+//             return b.created_at.localeCompare(a.created_at);
+//         });
+//     });
+// });
 
 onMounted(() => {
     filteredResources.value = props.resources;
@@ -61,8 +89,18 @@ onMounted(() => {
             </div>
 
             <div class="ml-48 mr-48 mt-8">
-                <input type="text" class="w-1/3 text-sm rounded mt-4 mb-2"
-                    placeholder="Buscar recurso..." v-model="search" />
+                <div class="mb-2">
+                    <select v-model="selectedCategory"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/5 p-2.5">
+                        <option :value="null">Todas las categorías</option>
+                        <option v-for="category in categories" :key="category.id" :value="category.id">
+                            {{ category.name }}
+                        </option>
+                    </select>
+                    <input type="text" v-model="search"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-1/3 p-2.5 ml-2"
+                        placeholder="Buscar recurso...">
+                </div>
                 <div class="rounded overflow-y-auto h-96">
                     <table class="table-fixed text-left w-full">
                         <thead class="text-lg uppercase bg-gray-500 text-white font-bold">

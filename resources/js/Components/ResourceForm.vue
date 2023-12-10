@@ -15,6 +15,7 @@ function createResource() {
         link: link.value,
         category_id: category_id.value,
     }).then((response) => {
+        alert('Recurso creado correctamente');
         window.location.href = '/';
     }).catch((error) => {
         alert(error.message);
@@ -31,30 +32,35 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="w-full flex flex-col m-6">
-        <div class="mb-4">
-            <p>Título:</p>
-            <input type="text" v-model="title" class="w-1/3 rounded">
+    <form class="m-6">
+        <div class="mb-6">
+            <label for="resource-title" class="block mb-2 text-sm font-medium text-gray-900">Título</label>
+            <input type="text" name="resource-title" id="resource-title" v-model="title"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5"
+                placeholder="Nombre del recurso..." required>
         </div>
-        <div class="mt-4 mb-4">
-            <p>Categoria:</p>
-            <select v-model="category_id" class="w-1/3 rounded">
-                <option v-for="category in categories" :key="category.id" :value="category.id">
-                    {{ category.name }}
-                </option>
+        <div class="mb-6">
+            <label for="resource-category" class="block mb-2 text-sm font-medium text-gray-900">Categoría</label>
+            <select id="resource-category" v-model="category_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5">
+                <option :value="null" disabled hidden>Seleccione una categoría</option>
+                <option v-for="category in categories" :key="category.id" :value="category.id" class="text-gray-900">
+                    {{ category.name }}</option>
             </select>
         </div>
-        <div class="mt-4 mb-4">
-            <p>Link:</p>
-            <input type="text" v-model="link" class="w-1/3 rounded">
+        <div class="mb-6">
+            <label for="resource_link" class="block mb-2 text-sm font-medium text-gray-900">Enlace</label>
+            <input type="text" name="resource_link" id="resource_link" v-model="link"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/3 p-2.5"
+                placeholder="https://..." required>
         </div>
-        <div class="mt-4 mb-4">
-            <p>Descripción:</p>
-            <textarea v-model="description" class="w-1/2 h-48 rounded resize-none"></textarea>
+        <div class="mb-6">
+            <label for="resource-description" class="block mb-2 text-sm font-medium text-gray-900">Descripción</label>
+            <textarea name="resource-description" id="resource-description" v-model="description"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-1/2 p-2.5 h-32 resize-none"
+                placeholder="Descripción del recurso..." required></textarea>
         </div>
-        <button @click="createResource"
-            class="w-28 py-2 transition ease-in-out delay-150 bg-blue-500 hover:-translate-y-1 hover:scale-110 hover:bg-blue-700 duration-300 font-bold text-white rounded">
-            Crear recurso
-        </button>
-    </div>
+        <button type="button" @click="createResource"
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear recurso</button>
+    </form>
 </template>
