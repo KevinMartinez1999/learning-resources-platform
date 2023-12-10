@@ -39,6 +39,7 @@ onMounted(() => {
         <div class="mt-4 mb-4">
             <p>Categoria:</p>
             <select v-model="category_id" class="w-1/3 rounded">
+                <option :value="null" disabled hidden>Seleccione una categoría</option>
                 <option v-for="category in categories" :key="category.id" :value="category.id">
                     {{ category.name }}
                 </option>

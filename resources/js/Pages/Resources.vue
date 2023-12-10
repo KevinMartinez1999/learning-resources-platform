@@ -92,7 +92,7 @@ onMounted(() => {
                 <div class="mb-2">
                     <select v-model="selectedCategory"
                         class="w-1/5 rounded border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-200 focus:ring-opacity-50">
-                        <option value="" selected>Todas las categorías</option>
+                        <option :value="null">Todas las categorías</option>
                         <option v-for="category in categories" :key="category.id" :value="category.id">
                             {{ category.name }}
                         </option>
