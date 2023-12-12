@@ -21,6 +21,13 @@ function createResource() {
     });
 }
 
+function cleanInputTexts() {
+    title.value = '';
+    description.value = '';
+    link.value = '';
+    category_id.value = null;
+}
+
 onMounted(() => {
     axios.get('/api/categories').then((response) => {
         categories.value = response.data;
@@ -55,6 +62,9 @@ onMounted(() => {
             <textarea name="resource-description" id="resource-description" v-model="description"
                 class="input-text w-5/12 h-40 resize-none" placeholder="Descripción del recurso..." required></textarea>
         </div>
-        <button type="button" @click="createResource" class="btn-animate">Crear recurso</button>
+        <div class="flex">
+            <button type="button" @click="createResource" class="btn-primary">Crear recurso</button>
+            <button type="button" @click="cleanInputTexts" class="btn-secondary ml-4">Limpiar</button>
+        </div>
     </form>
 </template>

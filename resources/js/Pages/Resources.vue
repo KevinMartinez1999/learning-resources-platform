@@ -34,7 +34,7 @@ watch([search, selectedCategory], (newValues) => {
         }
     }).then((response) => {
         filteredResources.value = response.data.sort((a, b) => {
-            return b.created_at.localeCompare(a.created_at);
+            return b.votes.length - a.votes.length;
         });
     });
 }, { immediate: true });
@@ -56,14 +56,16 @@ watch([search, selectedCategory], (newValues) => {
 // });
 
 onMounted(() => {
-    filteredResources.value = props.resources;
+    filteredResources.value = props.resources.sort((a, b) => {
+        return b.votes.length - a.votes.length;
+    });
 });
 
 function vote(resourceId) {
     axios.post('api/vote/' + resourceId).then((response) => {
         filteredResources.value = filteredResources.value.map((resource) => {
             if (resource.id === resourceId) {
-                return response.data;
+                return response.data
             }
 
             return resource;
@@ -138,12 +140,12 @@ function youHaveVoted(resource) {
                                     <button @click="vote(resource.id)">
                                         <svg v-if="youHaveVoted(resource)" xmlns="http://www.w3.org/2000/svg" fill="none"
                                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                            class="w-6 h-6 text-red-500">
+                                            class="w-6 h-6 text-red-500 animate-btn">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                         </svg>
                                         <svg v-else xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6 animate-btn">
                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                 d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
                                         </svg>
@@ -154,7 +156,7 @@ function youHaveVoted(resource) {
                                 </th>
                                 <th scope="row" class="p-4 w-2/3">{{ resource.title }}</th>
                                 <th scope="row" class="p-4 w-1/3">{{ resource.category.name }}</th>
-                                <th scope="row" class="p-4 w-1/3"><a :href="resource.link" target="_blank">Ver recurso</a>
+                                <th scope="row" class="p-4 w-1/3"><a :href="resource.link" target="_blank"><u>Ver recurso</u></a>
                                 </th>
                             </tr>
                             <template v-if="filteredResources.length == 0">
